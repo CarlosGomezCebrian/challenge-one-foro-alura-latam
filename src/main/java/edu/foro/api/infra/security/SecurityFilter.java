@@ -23,12 +23,15 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        // Obtener el token del header
-        var authHeader = request.getHeader("Authorization");
+          // Obtener el token del header
+        //var authHeader = request.getHeader("Authorization");
+        var authHeader = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDYXJsb3MuR29tZXoiLCJpc3MiOiJmb3JvIGFwaSIsImlkIjoxfQ.wiq8FkG3dyoDiJVpbcpAxGhfEH-9YYHZOxlyv4_sHv0";
+        System.out.println("authHeader "+authHeader);
         if (authHeader != null) {
             var token = authHeader.replace("Bearer ", "").trim();
             var username = tokenService.getSubject(token); // extract username
-            System.out.println(username);
+            System.out.println("Sin bearer " +token );
+            System.out.println(tokenService.getSubject(token));
             if (username!= null) {
                 // Token valido
                 var user = userRepository.findByLogin(username);
@@ -36,6 +39,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                         user.getAuthorities()); // Forzamos un inicio de sesion
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+        } else {
+            System.out.println("Token doFilterInternal not valid " + authHeader);
         }
         filterChain.doFilter(request, response);
     }

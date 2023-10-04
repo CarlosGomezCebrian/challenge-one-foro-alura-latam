@@ -53,7 +53,9 @@ public class Topic {
         this.status = Status.WHIT_RESPONSE;
     }
 
-    public void markAsSolved() {
+    public void markAsResolved() {
         this.status = Status.RESOLVED;
     }
+
+
 }

@@ -54,6 +54,7 @@ public class TopicService {
     public Page<DataDetailTopic> listarActivated(Pageable pageable) {
             return topicRepository.findByActivatedTrue(pageable).map(DataDetailTopic::new);
     }
+
     @Transactional
     public void cancel(DeleteTopicData deleteTopicData) {
         // Utiliza el repositorio para buscar un curso por su ID
@@ -68,13 +69,13 @@ public class TopicService {
     }
 
     @Transactional
-    public void markAsSolved(UpdateSolvedData updateSolvedData) {
+    public void markAsResolved(UpdateResolvedData updateResolvedData) {
 
-        Optional<Topic> optionalTopic = topicRepository.findById(updateSolvedData.id());
+        Optional<Topic> optionalTopic = topicRepository.findById(updateResolvedData.id());
 
 
         if(optionalTopic.isEmpty()){
-            throw new IntegrityValidity("Topic with ID " + updateSolvedData.id() + " not found");
+            throw new IntegrityValidity("Topic with ID " + updateResolvedData.id() + " not found");
         }
 
         Topic topicAnswer = optionalTopic.get();
@@ -89,11 +90,13 @@ public class TopicService {
         Answer answer = optionalAnswer.get();
         Long answerID = answer.getId();
 
-        answer.markAsSolved();
+        answer.markAsResolved();
 
-        Topic topic = topicRepository.getReferenceById(updateSolvedData.id());
-        topic.markAsSolved();
+        Topic topic = topicRepository.getReferenceById(updateResolvedData.id());
+        topic.markAsResolved();
     }
+
+
 }
 
 

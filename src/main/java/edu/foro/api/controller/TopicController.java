@@ -7,6 +7,7 @@ import edu.foro.api.domain.topic.*;
 
 
 import edu.foro.api.infra.errors.IntegrityValidity;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
@@ -17,6 +18,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static edu.foro.api.domain.topic.Status.NO_RESPONSE;
+
 @RestController
 @RequestMapping("/topic")
 public class TopicController {
@@ -26,6 +29,10 @@ public class TopicController {
 
 
     @PostMapping
+    @Operation(
+            summary = "Register a new topic",
+            description = "",
+            tags = { "Topic", "Post" })
     public ResponseEntity<DataDetailTopic> setDataRegistrationTopic(@RequestBody @Valid DataRegistrationTopic dataRegistrationTopic) throws IntegrityValidity {
        var response =  topicService.setDataRegistrationTopic(dataRegistrationTopic);
         return ResponseEntity.ok(response);
@@ -33,21 +40,34 @@ public class TopicController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DataDetailTopic>> topicList(@PageableDefault(page = 0, size = 15 , sort = {"user_id", "course_id"})Pageable pageable) throws IntegrityValidity{
+    @Operation(
+            summary = "List of active topics",
+            description = "",
+            tags = { "Topic", "Get" })
+    public ResponseEntity<Page<DataDetailTopic>> topicList(@PageableDefault(page = 0, size = 15 , sort = {"user_id", "course_id"})Pageable pageable
+    ) throws IntegrityValidity{
         var response = topicService.listarActivated(pageable);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping
+    @Operation(
+            summary = "List of active topics",
+            description = "",
+            tags = { "Topic", "Delete" })
     public ResponseEntity<String> cancelTopicData(@RequestBody @Valid DeleteTopicData deleteTopicData) {
              topicService.cancel(deleteTopicData);
             return ResponseEntity.ok("Topic with ID " + deleteTopicData.id() + " successfully deleted");
     }
 
     @PutMapping
-    public ResponseEntity<String> markAsSolved(@RequestBody @Valid UpdateSolvedData updateSolvedData) throws IntegrityValidity {
-        topicService.markAsSolved(updateSolvedData);
-        return ResponseEntity.ok("Topic with ID " + updateSolvedData.id() + " successfully update");
+    @Operation(
+            summary = "Records resolved issues",
+            description = "",
+            tags = { "Topic", "Put" })
+    public ResponseEntity<String> markAsResolved(@RequestBody @Valid UpdateResolvedData updateResolvedData) throws IntegrityValidity {
+        topicService.markAsResolved(updateResolvedData);
+        return ResponseEntity.ok("Topic with ID " + updateResolvedData.id() + " successfully update");
     }
 }
 

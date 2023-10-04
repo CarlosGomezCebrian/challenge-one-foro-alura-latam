@@ -27,9 +27,9 @@ public class AnswerController {
 
     @PostMapping
     @Operation(
-            summary = "registra una respuesta de un tema",
+            summary = "Records a response to a topic",
             description = "",
-            tags = { "Respuesta", "Post" })
+            tags = { "Answer", "Post" })
     public ResponseEntity<DataDetailAnswer> setDataRegistrationAnswer(@RequestBody @Valid DataRegistrationAnswer dataRegistrationAnswer) throws IntegrityValidity {
         var response =  answerService.setDataRegistrationAnswer(dataRegistrationAnswer);
         return ResponseEntity.ok(response);
@@ -37,9 +37,9 @@ public class AnswerController {
 
     @GetMapping
     @Operation(
-            summary = "obtiene listado de temas con respuesta",
+            summary = "Gets list of topics with response",
             description = "",
-            tags = { "Temas", "Get" })
+            tags = { "Topic", "Get" })
     public ResponseEntity<Page<DataDetailAnswer>> answerList(@PageableDefault(page = 0, size = 15 , sort = {"id"})Pageable pageable){
         var response = answerService.listarActivated(pageable);
         return ResponseEntity.ok(response);
@@ -47,9 +47,9 @@ public class AnswerController {
 
     @GetMapping("/resolved")
     @Operation(
-            summary = "obtiene listado de temas resueltos",
+            summary = "Gets list of resolved issues",
             description = "",
-            tags = { "Temas", "Get" })
+            tags = { "Topic", "Get" })
     public ResponseEntity<Page<DataDetailAnswer>> resolvedList(@PageableDefault(page = 0, size = 15 , sort = {"id"})Pageable pageable){
         var response = answerService.listarResolved(pageable);
         return ResponseEntity.ok(response);
@@ -57,9 +57,9 @@ public class AnswerController {
 
     @DeleteMapping
     @Operation(
-            summary = "cancela una respuesta",
+            summary = "Cancel a reply",
             description = "",
-            tags = { "Respuesta", "Delete" })
+            tags = { "Answer", "Delete" })
     public  ResponseEntity cancelAnswerData(@RequestBody @Valid DelateAnswerData delateAnswerData) throws IntegrityValidity {
         answerService.cancel(delateAnswerData);
         return ResponseEntity.ok("Answer with ID " + delateAnswerData.id() + " successfully deleted");

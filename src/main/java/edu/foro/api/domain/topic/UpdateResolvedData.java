@@ -2,5 +2,5 @@ package edu.foro.api.domain.topic;
 
 import jakarta.validation.constraints.NotNull;
 
-public record UpdateSolvedData(@NotNull Long id) {
+public record UpdateResolvedData(@NotNull Long id) {
 }

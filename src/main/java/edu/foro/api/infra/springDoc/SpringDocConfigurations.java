@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringDocConfigurations {
 
+
     @Bean
     public OpenAPI custumOpenAPI(){
         return new OpenAPI()
@@ -20,14 +21,14 @@ public class SpringDocConfigurations {
                                 .type(SecurityScheme.Type.HTTP)
                                 .scheme("bearer").bearerFormat("JWT")))
                 .info(new Info()
-                        .title("API Foro")
-                        .description("API Rest de la aplicación foro, que contiene las funcionalidades de CRUD de usuarios, cursos y topics ")
+                        .title("API forum")
+                        .description("Rest API of the forum application, which contains the CRUD functionalities of users, courses and topics")
                         .contact(new Contact()
-                                .name("Equipo Backend")
-                                .email("backend@voll.med"))
+                                .name("Backend Team")
+                                .email("backend@forum.api"))
                         .license(new License()
                                 .name("Apache 2.0")
-                                .url("http://foro/api/licencia")));
+                                .url("http://forum/api/licencia")));
     }
 
     @Bean
@@ -35,3 +36,10 @@ public class SpringDocConfigurations {
         System.out.println("bearer is working");
     }
 }
+/*
+    .components(new Components()
+                        .addSecuritySchemes("bearer-key", new SecurityScheme()
+                                .type(SecurityScheme.Type.HTTP)
+                                .scheme("bearer").bearerFormat("JWT")))
+
+ */

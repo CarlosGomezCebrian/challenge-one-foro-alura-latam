@@ -9,6 +9,9 @@ import edu.foro.api.domain.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 
 @Service
 public class TokenService {
@@ -16,21 +19,27 @@ public class TokenService {
     @Value("${api.security.secret}")
     private String apiSecret;
 
-    public String generarToken(User user) {
+    public String generateToken(User user) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(apiSecret);
-            System.out.println("apiSecret "+apiSecret);
-            System.out.println("algorithm " +algorithm);
             return JWT.create()
                     .withIssuer("foro api")
                     .withSubject(user.getLogin())
                     .withClaim("id", user.getId())
+                 //   .withExpiresAt(expirationTime())
                     .sign(algorithm);
         } catch (JWTCreationException exception){
             throw new RuntimeException();
         }
     }
+    // An expiration time is added to the token
+    private Instant expirationTime(){
+        return Instant.now().plus(2, ChronoUnit.HOURS);
+    }
+
     public String getSubject(String token) {
+        token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDYXJsb3MuR29tZXoiLCJpc3MiOiJmb3JvIGFwaSIsImlkIjoxfQ.wiq8FkG3dyoDiJVpbcpAxGhfEH-9YYHZOxlyv4_sHv0";
+        System.out.println("token getSubject "+ token);
         if (token == null) {
             throw new RuntimeException();
         }
@@ -43,10 +52,10 @@ public class TokenService {
                     .verify(token);
             verifier.getSubject();
         } catch (JWTVerificationException exception) {
-            System.out.println("No fue posible verificar "+exception.toString());
+            System.out.println("Unable to verify "+exception.toString());
         }
         if (verifier.getSubject() == null) {
-            throw new RuntimeException("Verifier invalido");
+            throw new RuntimeException("Invalid Verifier");
         }
         return verifier.getSubject();
     }

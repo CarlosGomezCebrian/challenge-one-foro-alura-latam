@@ -52,7 +52,7 @@ public class Answer {
         this.activated = true;
     }
 
-    public void markAsSolved() {
+    public void markAsResolved() {
         this.solution = true;
     }
 

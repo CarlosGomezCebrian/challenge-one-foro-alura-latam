@@ -1,4 +1,7 @@
 package edu.foro.api.infra.security;
 
-public record LoginUserData(String login, String password_hash) {
+import jakarta.validation.constraints.NotBlank;
+
+
+public record LoginUserData(@NotBlank String login, @NotBlank String password_hash) {
 }

@@ -21,37 +21,23 @@ public class SecurityConfigurations {
     @Autowired
     private SecurityFilter securityFilter;
 
-
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
-        return httpSecurity.csrf().disable().sessionManagement().
-                sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().build();
-    }
-
-    /*
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
-                        .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
-                        .anyRequest().authenticated())
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
-    }*/
+     @Bean
+     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+         return httpSecurity
+                 .csrf(csrf -> csrf.disable())
+                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                 .authorizeHttpRequests(auth -> auth
+                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                         .requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                         .anyRequest().authenticated())
+                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                 .build();
+     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
             throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
-    /*
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-
-        return new BCryptPasswordEncoder();
-    }*/
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -60,3 +46,18 @@ public class SecurityConfigurations {
 
 }
 
+/*
+@Bean
+public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http.csrf().disable()
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and().authorizeRequests()
+        .antMatchers(HttpMethod.POST, "/login").permitAll()
+        .antMatchers(HttpMethod.DELETE, "/course").hasRole("ADMIN")
+        .antMatchers(HttpMethod.DELETE, "/users").hasRole("ADMIN")
+        .anyRequest().authenticated()
+        .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+        .build();
+}
+
+ */
