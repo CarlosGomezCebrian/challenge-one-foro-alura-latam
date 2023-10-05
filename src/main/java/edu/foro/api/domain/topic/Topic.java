@@ -45,7 +45,7 @@ public class Topic {
         this.tittle = dataRegistrationTopic.tittle();
         this.message = dataRegistrationTopic.message();
         this.create_date = new Date(System.currentTimeMillis());
-        this.status = Status.NO_RESPONSE; // Asumiendo que Status.NO_RESPONSE es una constante
+        this.status = Status.NO_RESPONSE;
         this.user = user;
         this.course = course;
         this.activated = true;

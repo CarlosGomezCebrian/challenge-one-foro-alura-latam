@@ -108,7 +108,7 @@ public class TopicService {
 
     @Transactional
     public void cancel(DeleteTopicData deleteTopicData) {
-        // Utiliza el repositorio para buscar un curso por su ID
+
         Optional<Topic> optionalTopic = topicRepository.findById(deleteTopicData.id());
 
         if(optionalTopic.isEmpty()){
@@ -140,7 +140,7 @@ public class TopicService {
             throw new IntegrityValidity("Answer for Topic with ID " + topic.getId() + " not found");
         }
         for (Answer answer : answers) {
-            answer.markAsResolved(); // Marca todas las respuestas relacionadas con el tema como resueltas
+            answer.markAsResolved();
         }
 
 
@@ -153,27 +153,5 @@ public class TopicService {
 }
 
 
-/*
-@Transactional
-public void markAsResolved(UpdateResolvedData updateResolvedData) {
 
-
-    List<Answer> answers = answerRepository.findByTopicId(topic.getId());
-    for (Answer answer : answers) {
-        answer.markAsResolved(); // Marca todas las respuestas relacionadas con el tema como resueltas
-    }
-}
-
-        Optional<Answer> optionalAnswer = answerRepository.findByTopicId(topic.getId());
-
-        if (answers.isEmpty()) {
-            throw new IntegrityValidity("Answer for Topic with ID " + topic.getId() + " not found");
-        }
-
-        Answer answer = optionalAnswer.get();
-
-
-        answer.markAsResolved();
-
- */
 

@@ -7,8 +7,6 @@ import edu.foro.api.domain.user.UserRepository;
 import edu.foro.api.domain.topic.TopicRepository;
 import edu.foro.api.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,15 +45,6 @@ public class AnswerService {
         return new DataDetailAnswer(answer);  }
 
 
-
-    public Page<DataDetailAnswer> listarActivated(Pageable pageable) {
-        return answerRepository.findByActivatedTrue(pageable).map(DataDetailAnswer::new);
-    }
-
-    public Page<DataDetailAnswer> listarResolved(Pageable pageable) {
-        return answerRepository.findBySolutionTrue(pageable).map(DataDetailAnswer::new);
-    }
-
     @Transactional
     public void cancel(DelateAnswerData delateAnswerData) {
         Optional<Answer> optionalAnswer = answerRepository.findById(delateAnswerData.id());
@@ -66,7 +55,6 @@ public class AnswerService {
         Answer answer = answerRepository.getReferenceById(delateAnswerData.id());
         answer.desactivateAnswer();
     }
-
 
 }
 

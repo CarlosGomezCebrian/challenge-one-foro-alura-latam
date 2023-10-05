@@ -8,7 +8,6 @@ import edu.foro.api.domain.topic.*;
 
 import edu.foro.api.infra.errors.IntegrityValidity;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import static edu.foro.api.domain.topic.Status.NO_RESPONSE;
 
 @RestController
 @RequestMapping("/topic")

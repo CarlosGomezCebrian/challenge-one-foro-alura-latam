@@ -6,7 +6,6 @@ import edu.foro.api.infra.errors.IntegrityValidity;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -68,14 +67,3 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 }
-
-
-/*
-
-    @PutMapping
-    public ResponseEntity<String> markAsSolved(@RequestBody @Valid UpdateSolvedData updateSolvedData) throws IntegrityValidity {
-        topicService.markAsSolved(updateSolvedData);
-        return ResponseEntity.ok("Topic with ID " + updateSolvedData.id() + " successfully update");
-    }
-
- */

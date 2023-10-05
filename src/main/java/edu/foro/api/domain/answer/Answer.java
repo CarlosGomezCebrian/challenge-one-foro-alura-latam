@@ -20,8 +20,6 @@ import java.sql.Date;
 @Entity(name = "Answer")
 public class Answer {
 
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -47,8 +45,8 @@ public class Answer {
         this.message = dataRegistrationAnswer.message();
         this.create_date = new Date(System.currentTimeMillis());
         this.solution = false;
-        this.user = user; // Asigna la instancia de User proporcionada
-        this.topic = topic; // Asigna la instancia de Course proporcionada
+        this.user = user;
+        this.topic = topic;
         this.activated = true;
     }
 

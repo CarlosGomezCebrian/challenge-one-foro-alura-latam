@@ -26,17 +26,15 @@ public class SecurityFilter extends OncePerRequestFilter {
           // Obtener el token del header
         //var authHeader = request.getHeader("Authorization");
         var authHeader = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDYXJsb3MuR29tZXoiLCJpc3MiOiJmb3JvIGFwaSIsImlkIjoxfQ.wiq8FkG3dyoDiJVpbcpAxGhfEH-9YYHZOxlyv4_sHv0";
-        System.out.println("authHeader "+authHeader);
+
         if (authHeader != null) {
             var token = authHeader.replace("Bearer ", "").trim();
             var username = tokenService.getSubject(token); // extract username
-            System.out.println("Sin bearer " +token );
-            System.out.println(tokenService.getSubject(token));
             if (username!= null) {
                 // Token valido
                 var user = userRepository.findByLogin(username);
                 var authentication = new UsernamePasswordAuthenticationToken(user, null,
-                        user.getAuthorities()); // Forzamos un inicio de sesion
+                        user.getAuthorities()); // Forzamos un inicio de sesión
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } else {

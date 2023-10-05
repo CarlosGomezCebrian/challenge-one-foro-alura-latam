@@ -39,7 +39,7 @@ public class TokenService {
 
     public String getSubject(String token) {
         token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJDYXJsb3MuR29tZXoiLCJpc3MiOiJmb3JvIGFwaSIsImlkIjoxfQ.wiq8FkG3dyoDiJVpbcpAxGhfEH-9YYHZOxlyv4_sHv0";
-        System.out.println("token getSubject "+ token);
+
         if (token == null) {
             throw new RuntimeException();
         }

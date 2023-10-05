@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -46,18 +45,3 @@ public class SecurityConfigurations {
 
 }
 
-/*
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http.csrf().disable()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().authorizeRequests()
-        .antMatchers(HttpMethod.POST, "/login").permitAll()
-        .antMatchers(HttpMethod.DELETE, "/course").hasRole("ADMIN")
-        .antMatchers(HttpMethod.DELETE, "/users").hasRole("ADMIN")
-        .anyRequest().authenticated()
-        .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
-        .build();
-}
-
- */

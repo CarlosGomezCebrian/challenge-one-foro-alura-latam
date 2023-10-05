@@ -36,10 +36,3 @@ public class SpringDocConfigurations {
         System.out.println("bearer is working");
     }
 }
-/*
-    .components(new Components()
-                        .addSecuritySchemes("bearer-key", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer").bearerFormat("JWT")))
-
- */
