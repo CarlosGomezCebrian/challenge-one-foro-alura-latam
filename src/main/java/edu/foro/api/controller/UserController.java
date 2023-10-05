@@ -4,6 +4,7 @@ package edu.foro.api.controller;
 import edu.foro.api.domain.user.*;
 import edu.foro.api.infra.errors.IntegrityValidity;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/user")
+@SecurityRequirement(name = "bearer-key")
 public class UserController {
 
     private final UserService userService;

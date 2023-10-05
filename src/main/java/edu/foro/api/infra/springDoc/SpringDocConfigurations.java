@@ -18,8 +18,8 @@ public class SpringDocConfigurations {
         return new OpenAPI()
                 .components(new Components()
                         .addSecuritySchemes("bearer-key", new SecurityScheme()
-                                .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer").bearerFormat("JWT")))
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer").bearerFormat("JWT")))
                 .info(new Info()
                         .title("API forum")
                         .description("Rest API of the forum application, which contains the CRUD functionalities of users, courses and topics")
@@ -36,3 +36,4 @@ public class SpringDocConfigurations {
         System.out.println("bearer is working");
     }
 }
+//http://localhost:8080/swagger-ui/index.html#/
