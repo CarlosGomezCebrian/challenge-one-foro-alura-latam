@@ -35,26 +35,6 @@ public class AnswerController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
-    @Operation(
-            summary = "Gets list of topics with response",
-            description = "",
-            tags = { "Topic", "Get" })
-    public ResponseEntity<Page<DataDetailAnswer>> answerList(@PageableDefault(page = 0, size = 15 , sort = {"id"})Pageable pageable){
-        var response = answerService.listarActivated(pageable);
-        return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/resolved")
-    @Operation(
-            summary = "Gets list of resolved issues",
-            description = "",
-            tags = { "Topic", "Get" })
-    public ResponseEntity<Page<DataDetailAnswer>> resolvedList(@PageableDefault(page = 0, size = 15 , sort = {"id"})Pageable pageable){
-        var response = answerService.listarResolved(pageable);
-        return ResponseEntity.ok(response);
-    }
-
     @DeleteMapping
     @Operation(
             summary = "Cancel a reply",

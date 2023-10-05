@@ -9,11 +9,14 @@ import edu.foro.api.domain.user.UserRepository;
 import edu.foro.api.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TopicService {
@@ -51,8 +54,56 @@ public class TopicService {
 
         return new DataDetailTopic(topic);
     }
-    public Page<DataDetailTopic> listarActivated(Pageable pageable) {
+    public Page<DataDetailTopic> listActivated(Pageable pageable) {
             return topicRepository.findByActivatedTrue(pageable).map(DataDetailTopic::new);
+    }
+
+    public Page<DataDetailTopic> listNoResponse(Pageable pageable) {
+        Page<Topic> topicsPage = topicRepository.findByActivatedTrue(pageable);
+
+        // Filtrar los temas con Status igual a NO_RESPONSE
+        List<DataDetailTopic> filteredTopics = topicsPage.getContent()
+                .stream()
+                .filter(topic -> topic.getStatus() == Status.NO_RESPONSE)
+                .map(DataDetailTopic::new)
+                .collect(Collectors.toList());
+
+        // Crear una nueva Page con los temas filtrados
+        Page<DataDetailTopic> filteredPage = new PageImpl<>(filteredTopics, pageable, filteredTopics.size());
+
+        return filteredPage;
+    }
+
+    public Page<DataDetailTopic> listWhitResponse(Pageable pageable) {
+        Page<Topic> topicsPage = topicRepository.findByActivatedTrue(pageable);
+
+
+        List<DataDetailTopic> filteredTopics = topicsPage.getContent()
+                .stream()
+                .filter(topic -> topic.getStatus() == Status.WHIT_RESPONSE || topic.getStatus() == Status.RESOLVED)
+                .map(DataDetailTopic::new)
+                .collect(Collectors.toList());
+
+        // Crear una nueva Page con los temas filtrados
+        Page<DataDetailTopic> filteredPage = new PageImpl<>(filteredTopics, pageable, filteredTopics.size());
+
+        return filteredPage;
+    }
+
+    public Page<DataDetailTopic> listResolved(Pageable pageable) {
+        Page<Topic> topicsPage = topicRepository.findByActivatedTrue(pageable);
+
+
+        List<DataDetailTopic> filteredTopics = topicsPage.getContent()
+                .stream()
+                .filter(topic -> topic.getStatus() == Status.RESOLVED)
+                .map(DataDetailTopic::new)
+                .collect(Collectors.toList());
+
+        // Crear una nueva Page con los temas filtrados
+        Page<DataDetailTopic> filteredPage = new PageImpl<>(filteredTopics, pageable, filteredTopics.size());
+
+        return filteredPage;
     }
 
     @Transactional
@@ -78,27 +129,51 @@ public class TopicService {
             throw new IntegrityValidity("Topic with ID " + updateResolvedData.id() + " not found");
         }
 
-        Topic topicAnswer = optionalTopic.get();
-        Long topicID = topicAnswer.getId();
-
-
-        Optional<Answer> optionalAnswer = answerRepository.findByTopicId(topicID);
-
-        if (optionalAnswer.isEmpty()) {
-            throw new IntegrityValidity("Answer for Topic with ID " + topicID + " not found");
-        }
-        Answer answer = optionalAnswer.get();
-        Long answerID = answer.getId();
-
-        answer.markAsResolved();
-
-        Topic topic = topicRepository.getReferenceById(updateResolvedData.id());
+        Topic topic = optionalTopic.get();
         topic.markAsResolved();
+
+
+
+        List<Answer> answers = answerRepository.findByTopicId(topic.getId());
+
+        if (answers.isEmpty()) {
+            throw new IntegrityValidity("Answer for Topic with ID " + topic.getId() + " not found");
+        }
+        for (Answer answer : answers) {
+            answer.markAsResolved(); // Marca todas las respuestas relacionadas con el tema como resueltas
+        }
+
+
+
+
+
     }
 
 
 }
 
 
+/*
+@Transactional
+public void markAsResolved(UpdateResolvedData updateResolvedData) {
 
+
+    List<Answer> answers = answerRepository.findByTopicId(topic.getId());
+    for (Answer answer : answers) {
+        answer.markAsResolved(); // Marca todas las respuestas relacionadas con el tema como resueltas
+    }
+}
+
+        Optional<Answer> optionalAnswer = answerRepository.findByTopicId(topic.getId());
+
+        if (answers.isEmpty()) {
+            throw new IntegrityValidity("Answer for Topic with ID " + topic.getId() + " not found");
+        }
+
+        Answer answer = optionalAnswer.get();
+
+
+        answer.markAsResolved();
+
+ */
 

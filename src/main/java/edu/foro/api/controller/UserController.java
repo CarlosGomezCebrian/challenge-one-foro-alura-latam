@@ -72,10 +72,6 @@ public class UserController {
 
 /*
 
-
-
-
-
     @PutMapping
     public ResponseEntity<String> markAsSolved(@RequestBody @Valid UpdateSolvedData updateSolvedData) throws IntegrityValidity {
         topicService.markAsSolved(updateSolvedData);

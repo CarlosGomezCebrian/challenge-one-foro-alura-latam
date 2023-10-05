@@ -28,7 +28,7 @@ public class LoginController {
 
     @PostMapping
     @Operation(
-            summary = "Gets taken to enter",
+            summary = "Gets token to enter",
             description = "Requires username and password",
             tags = { "Login", "Post" })
     public ResponseEntity loginUser(@RequestBody @Valid LoginUserData loginUserData){

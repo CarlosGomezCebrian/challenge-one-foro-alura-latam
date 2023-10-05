@@ -1,10 +1,12 @@
 package edu.foro.api.domain.topic;
 
 
+import edu.foro.api.domain.answer.Answer;
 import edu.foro.api.domain.course.Course;
 import edu.foro.api.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.List;
 
 
 import java.sql.Date;
@@ -26,6 +28,7 @@ public class Topic {
     private String message;
     private Date create_date;
     private Status status;
+    private Date resolved_date;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,6 +36,9 @@ public class Topic {
     @JoinColumn(name = "course_id")
     private Course course;
     private Boolean activated;
+
+    @OneToMany(mappedBy = "topic", fetch = FetchType.LAZY)
+    private List<Answer> answers;
 
 
     public Topic(DataRegistrationTopic dataRegistrationTopic, User user, Course course ) {
@@ -54,7 +60,9 @@ public class Topic {
     }
 
     public void markAsResolved() {
+
         this.status = Status.RESOLVED;
+        this.resolved_date = new Date(System.currentTimeMillis());
     }
 
 

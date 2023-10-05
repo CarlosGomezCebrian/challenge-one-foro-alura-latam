@@ -41,18 +41,50 @@ public class TopicController {
 
     @GetMapping
     @Operation(
-            summary = "List of active topics",
+            summary = "Gets list of active topics",
             description = "",
             tags = { "Topic", "Get" })
     public ResponseEntity<Page<DataDetailTopic>> topicList(@PageableDefault(page = 0, size = 15 , sort = {"user_id", "course_id"})Pageable pageable
     ) throws IntegrityValidity{
-        var response = topicService.listarActivated(pageable);
+        var response = topicService.listActivated(pageable);
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/noresponse")
+    @Operation(
+            summary = "Gets a list of no response topics",
+            description = "",
+            tags = { "Topic", "Get" })
+    public ResponseEntity<Page<DataDetailTopic>> topicListNoResponse(@PageableDefault(page = 0, size = 15 , sort = {"user_id", "course_id"})Pageable pageable
+    ) throws IntegrityValidity{
+        var response = topicService.listNoResponse(pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/response")
+    @Operation(
+            summary = "Gets a list of topics with answers",
+            description = "",
+            tags = { "Topic", "Get" })
+    public ResponseEntity<Page<DataDetailTopic>> topicListWhitResponse(@PageableDefault(page = 0, size = 15 , sort = {"user_id", "course_id"})Pageable pageable
+    ) throws IntegrityValidity{
+        var response = topicService.listWhitResponse(pageable);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/resolved")
+    @Operation(
+            summary = "Gets a list of resolved issues",
+            description = "",
+            tags = { "Topic", "Get" })
+    public ResponseEntity<Page<DataDetailTopic>> topicListResolved(@PageableDefault(page = 0, size = 15 , sort = {"user_id", "course_id"})Pageable pageable
+    ) throws IntegrityValidity{
+        var response = topicService.listResolved(pageable);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping
     @Operation(
-            summary = "List of active topics",
+            summary = "Turn off topics",
             description = "",
             tags = { "Topic", "Delete" })
     public ResponseEntity<String> cancelTopicData(@RequestBody @Valid DeleteTopicData deleteTopicData) {

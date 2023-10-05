@@ -4,6 +4,7 @@ CREATE TABLE topics (
     message VARCHAR(1000) NOT NULL,
     create_date TIMESTAMP NOT NULL,
     status VARCHAR(50),
+    resolved_date TIMESTAMP,
     user_id BIGINT NOT NULL,
     course_id BIGINT NOT NULL,
     activated TINYINT NOT NULL,

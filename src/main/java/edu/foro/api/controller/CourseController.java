@@ -30,7 +30,7 @@ public class CourseController {
 
     @GetMapping
     @Operation(
-            summary = "List of available courses",
+            summary = "Gets list of available courses",
             description = "",
             tags = { "Course", "Get" })
     public ResponseEntity<Page<DataDetailCourse>> courseList(@PageableDefault(size = 15, sort = {"id"}) Pageable pageable){
